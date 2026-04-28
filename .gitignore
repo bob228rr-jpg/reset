@@ -1,0 +1,5 @@
+.DS_Store
+# Duplicate / unused copies (site uses hand-*.png, hero-main.png, logo-lore.png)
+assets/tg_image_*.png
+assets/hero.png
+assets/lore-logo.png
