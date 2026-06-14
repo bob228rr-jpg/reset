@@ -72,13 +72,26 @@
       left: 50%;
       top: 50%;
       width: min(26vw, 200px);
-      --angle: calc((360 / 9) * var(--i) * 1deg);
       --pull: min(36vw, 280px);
-      transform: translate(-50%, -50%) rotate(var(--angle)) translateY(calc(-1 * var(--pull))) rotate(calc(-1 * var(--angle) + 88deg));
+      transform: translate(-50%, -50%) rotate(var(--angle)) translateY(calc(-1 * var(--pull))) rotate(var(--twist));
       filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.55));
       animation: hand-float 2.8s ease-in-out infinite;
-      animation-delay: calc(var(--i) * 0.12s);
+      animation-delay: calc(var(--delay) * 0.12s);
     }
+
+    /*
+     * База: палец «вправо» в файле → --twist 90deg даёт направление к центру.
+     * Ниже — поправки по факту с макета (как смотрит палец сейчас → к центру).
+     */
+    .hand--0 { --angle: 0deg;   --twist: 180deg; --delay: 0; } /* зелёная: палец вверх → вниз на RESET */
+    .hand--1 { --angle: 40deg;  --twist: 180deg; --delay: 1; } /* белая: палец вправо → к центру вниз-влево */
+    .hand--2 { --angle: 80deg;  --twist: 180deg; --delay: 2; } /* пиксель: вниз → влево */
+    .hand--3 { --angle: 120deg; --twist: 180deg; --delay: 3; } /* реализм: SW → NW */
+    .hand--4 { --angle: 160deg; --twist: 180deg; --delay: 4; } /* между 4:30 и 6 — как соседи к центру */
+    .hand--5 { --angle: 200deg; --twist: 180deg; --delay: 5; } /* броня: влево → вверх */
+    .hand--6 { --angle: 240deg; --twist: 188deg; --delay: 6; } /* ч/б лапа ~8ч */
+    .hand--7 { --angle: 280deg; --twist: 180deg; --delay: 7; } /* лапа: вверх → вправо */
+    .hand--8 { --angle: 320deg; --twist: 180deg; --delay: 8; } /* doge: NE → к центру (SE) */
 
     .hand img {
       width: 100%;
@@ -87,8 +100,8 @@
     }
 
     @keyframes hand-float {
-      0%, 100% { transform: translate(-50%, -50%) rotate(var(--angle)) translateY(calc(-1 * var(--pull))) rotate(calc(-1 * var(--angle) + 88deg)) scale(1); }
-      50% { transform: translate(-50%, -50%) rotate(var(--angle)) translateY(calc(-1 * var(--pull) - 10px)) rotate(calc(-1 * var(--angle) + 88deg)) scale(1.03); }
+      0%, 100% { transform: translate(-50%, -50%) rotate(var(--angle)) translateY(calc(-1 * var(--pull))) rotate(var(--twist)) scale(1); }
+      50% { transform: translate(-50%, -50%) rotate(var(--angle)) translateY(calc(-1 * var(--pull) - 10px)) rotate(var(--twist)) scale(1.03); }
     }
 
     .reset-hit {
@@ -341,6 +354,12 @@
       text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
     }
 
+    .btn-3d--placeholder {
+      cursor: default;
+      pointer-events: none;
+      opacity: 0.82;
+    }
+
     .contract-box {
       display: flex;
       align-items: center;
@@ -379,6 +398,12 @@
 
     .btn-copy:hover { filter: brightness(1.1); }
     .btn-copy:active { transform: translateY(2px); }
+
+    .btn-copy:disabled {
+      cursor: default;
+      filter: none;
+      opacity: 0.72;
+    }
 
     .btn-copy.is-copied {
       background: linear-gradient(180deg, var(--green) 0%, var(--green-deep) 100%);
@@ -490,15 +515,15 @@
   <section id="splash" aria-label="Intro">
     <div class="splash-inner">
       <div class="hands-ring" aria-hidden="true">
-        <div class="hand" style="--i:0"><img src="assets/hand-1.png" alt="" /></div>
-        <div class="hand" style="--i:1"><img src="assets/hand-2.png" alt="" /></div>
-        <div class="hand" style="--i:2"><img src="assets/hand-3.png" alt="" /></div>
-        <div class="hand" style="--i:3"><img src="assets/hand-4.png" alt="" /></div>
-        <div class="hand" style="--i:4"><img src="assets/hand-5.png" alt="" /></div>
-        <div class="hand" style="--i:5"><img src="assets/hand-6.png" alt="" /></div>
-        <div class="hand" style="--i:6"><img src="assets/hand-7.png" alt="" /></div>
-        <div class="hand" style="--i:7"><img src="assets/hand-8.png" alt="" /></div>
-        <div class="hand" style="--i:8"><img src="assets/hand-9.png" alt="" /></div>
+        <div class="hand hand--0"><img src="assets/hand-1.png" alt="" /></div>
+        <div class="hand hand--1"><img src="assets/hand-2.png" alt="" /></div>
+        <div class="hand hand--2"><img src="assets/hand-3.png" alt="" /></div>
+        <div class="hand hand--3"><img src="assets/hand-4.png" alt="" /></div>
+        <div class="hand hand--4"><img src="assets/hand-5.png" alt="" /></div>
+        <div class="hand hand--5"><img src="assets/hand-6.png" alt="" /></div>
+        <div class="hand hand--6"><img src="assets/hand-7.png" alt="" /></div>
+        <div class="hand hand--7"><img src="assets/hand-8.png" alt="" /></div>
+        <div class="hand hand--8"><img src="assets/hand-9.png" alt="" /></div>
       </div>
       <button type="button" class="reset-hit" id="btn-reset" aria-label="Reset — enter site">
         <span class="reset-visual"></span>
@@ -526,10 +551,10 @@
         <h1><span>$RESET</span></h1>
         <p class="hero-sub">The play for everyone still here who thinks this market needs a hard reset.</p>
         <div class="btn-row">
-          <a class="btn-3d btn-3d--green" href="https://x.com/Great_MemeReset" target="_blank" rel="noopener noreferrer">X Community</a>
+          <span class="btn-3d btn-3d--green btn-3d--placeholder" aria-disabled="true">Community soon</span>
           <div class="contract-box" id="hero-contract">
             <code id="contract-text"></code>
-            <button type="button" class="btn-copy" id="btn-copy-hero" data-contract="">Copy</button>
+            <button type="button" class="btn-copy" id="btn-copy-hero" data-contract="" disabled>Soon</button>
           </div>
         </div>
       </div>
@@ -555,7 +580,7 @@
       <p class="tagline reveal" data-reveal>$RESET — hard reset energy for a cooked market</p>
       <div class="contract-box contract-wide reveal" data-reveal>
         <code id="contract-text-footer"></code>
-        <button type="button" class="btn-copy" id="btn-copy-footer" data-contract="">Copy</button>
+        <button type="button" class="btn-copy" id="btn-copy-footer" data-contract="" disabled>Soon</button>
       </div>
     </footer>
   </main>
@@ -660,8 +685,8 @@
       const btnFoot = document.getElementById("btn-copy-footer");
       codeHero.textContent = CONTRACT_PLACEHOLDER;
       codeFoot.textContent = CONTRACT_PLACEHOLDER;
-      btnHero.setAttribute("data-contract", CONTRACT_PLACEHOLDER);
-      btnFoot.setAttribute("data-contract", CONTRACT_PLACEHOLDER);
+      btnHero.setAttribute("data-contract", "");
+      btnFoot.setAttribute("data-contract", "");
 
       bindCopy(btnHero, codeHero);
       bindCopy(btnFoot, codeFoot);
