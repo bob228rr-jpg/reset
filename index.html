@@ -554,7 +554,7 @@
           <a class="btn-3d btn-3d--green" href="https://x.com/press_memereset" target="_blank" rel="noopener noreferrer">Twitter</a>
           <div class="contract-box" id="hero-contract">
             <code id="contract-text"></code>
-            <button type="button" class="btn-copy" id="btn-copy-hero" data-contract="" disabled>Soon</button>
+            <button type="button" class="btn-copy" id="btn-copy-hero" data-contract="">Copy</button>
           </div>
         </div>
       </div>
@@ -580,7 +580,7 @@
       <p class="tagline reveal" data-reveal>$RESET — hard reset energy for a cooked market</p>
       <div class="contract-box contract-wide reveal" data-reveal>
         <code id="contract-text-footer"></code>
-        <button type="button" class="btn-copy" id="btn-copy-footer" data-contract="" disabled>Soon</button>
+        <button type="button" class="btn-copy" id="btn-copy-footer" data-contract="">Copy</button>
       </div>
     </footer>
   </main>
@@ -588,7 +588,7 @@
   <script>
     (function () {
       /** Paste CA here when ready — updates copy targets */
-      const CONTRACT_PLACEHOLDER = "Contract soon";
+      const CONTRACT_PLACEHOLDER = "5NspmxHDz2XUpjJDeFax9UW35hEHFdQghNZpdCRupump";
 
       const splash = document.getElementById("splash");
       const loader = document.getElementById("loader");
@@ -685,8 +685,8 @@
       const btnFoot = document.getElementById("btn-copy-footer");
       codeHero.textContent = CONTRACT_PLACEHOLDER;
       codeFoot.textContent = CONTRACT_PLACEHOLDER;
-      btnHero.setAttribute("data-contract", "");
-      btnFoot.setAttribute("data-contract", "");
+      btnHero.setAttribute("data-contract", CONTRACT_PLACEHOLDER);
+      btnFoot.setAttribute("data-contract", CONTRACT_PLACEHOLDER);
 
       bindCopy(btnHero, codeHero);
       bindCopy(btnFoot, codeFoot);
